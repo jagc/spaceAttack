@@ -19,6 +19,8 @@ func _shoot():
 	var new_projectile = projectile.instance()
 	new_projectile.position = global_position
 	get_tree().get_root().add_child(new_projectile)
+	can_shoot = false
+	timer.start()
 
 func add_damage(damage):
 	health -= damage
@@ -26,3 +28,6 @@ func add_damage(damage):
 		dead = true
 		collision.queue_free()
 		hide()
+
+func _on_Timer_timeout():
+	can_shoot = true
