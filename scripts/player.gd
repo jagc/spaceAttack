@@ -26,7 +26,8 @@ func _process(delta):
 	if can_shoot and Input.is_action_pressed("shoot"):
 		can_shoot = false
 		var new_projectile = projectile.instance()
-		add_child(new_projectile)
+		get_parent().add_child(new_projectile)
+		new_projectile.position = position
 		timer.start()
     
 	position.x = clamp(position.x, 0 + half_sprite_size, screen_size - half_sprite_size)
