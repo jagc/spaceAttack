@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+export(PackedScene) var projectile
+
 const SPEED = 500
 
 var screen_size
@@ -18,5 +20,9 @@ func _process(delta):
 		position.x += SPEED * delta
 	elif Input.is_action_just_pressed("close"):
 		get_tree().quit()
+		
+	if Input.is_action_pressed("shoot"):
+		var new_projectile = projectile.instance()
+		add_child(new_projectile)
     
 	position.x = clamp(position.x, 0 + half_sprite_size, screen_size - half_sprite_size)
