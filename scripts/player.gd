@@ -6,8 +6,10 @@ const SPEED = 500
 
 var screen_size
 var half_sprite_size
+var can_shoot = true
 
 onready var sprite = $Sprite
+onready var timer = $Timer
 
 func _ready():
 	screen_size = get_viewport_rect().size.x
@@ -21,8 +23,13 @@ func _process(delta):
 	elif Input.is_action_just_pressed("close"):
 		get_tree().quit()
 		
-	if Input.is_action_pressed("shoot"):
+	if can_shoot and Input.is_action_pressed("shoot"):
+		can_shoot = false
 		var new_projectile = projectile.instance()
 		add_child(new_projectile)
+		timer.start()
     
 	position.x = clamp(position.x, 0 + half_sprite_size, screen_size - half_sprite_size)
+
+func _on_Timer_timeout():
+	can_shoot = true
