@@ -10,6 +10,8 @@ var direction = 1
 
 var enemies_count
 
+signal formation_defeated
+
 func _ready():
 	target_position = rand_range(200, get_viewport_rect().size.y / 2)
 	left_bound = position.x - 100
@@ -35,7 +37,8 @@ func movement(delta):
 		is_in_position = true
 
 func _defeated():
-	pass
+	emit_signal("formation_defeated")
+	queue_free()
 
 func _on_any_enemy_defeated():
 	enemies_count -= 1
@@ -43,4 +46,10 @@ func _on_any_enemy_defeated():
 		_defeated()
 
 func _on_enemy_was_defeated():
+	_on_any_enemy_defeated()
+
+func _on_enemy2_was_defeated():
+	_on_any_enemy_defeated()
+
+func _on_enemy3_was_defeated():
 	_on_any_enemy_defeated()
