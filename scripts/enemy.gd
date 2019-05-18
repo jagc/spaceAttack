@@ -11,6 +11,8 @@ export var health = 30
 var dead = false
 var can_shoot = true
 
+signal was_defeated
+
 func _process(delta):
 	if can_shoot:
 		_shoot()
@@ -30,6 +32,7 @@ func add_damage(damage):
 		dead = true
 		collision.queue_free()
 		hide()
+		emit_signal("was_defeated")
 
 func _on_Timer_timeout():
 	can_shoot = true
