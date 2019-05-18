@@ -16,6 +16,8 @@ func _process(delta):
 		_shoot()
 
 func _shoot():
+	if dead:
+		return
 	var new_projectile = projectile.instance()
 	new_projectile.position = global_position
 	get_tree().get_root().add_child(new_projectile)
