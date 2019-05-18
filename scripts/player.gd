@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 export(PackedScene) var projectile
-export var health = 30
+export var health = 100
 
 const SPEED = 500
 
@@ -13,6 +13,7 @@ var dead = false
 onready var sprite = $Sprite
 onready var timer = $Timer
 onready var deathTimer = $deathTimer
+onready var audio = $audio
 
 func _ready():
 	screen_size = get_viewport_rect().size.x
@@ -32,6 +33,7 @@ func _process(delta):
 		get_parent().add_child(new_projectile)
 		new_projectile.position = position
 		timer.start()
+		audio.play()
     
 	position.x = clamp(position.x, 0 + half_sprite_size, screen_size - half_sprite_size)
 
