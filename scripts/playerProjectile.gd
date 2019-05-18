@@ -12,6 +12,6 @@ func _process(delta):
 		queue_free()
 
 func _on_area_entered(area):
-	if area.is_in_group("Enemies"):
+	if area.is_in_group("enemies"):
 		area.add_damage(damage)
 		queue_free()

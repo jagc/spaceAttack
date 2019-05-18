@@ -7,7 +7,9 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 46.6591, 42.2491 )
 
-[node name="enemy" type="Area2D"]
+[node name="enemy" type="Area2D" groups=[
+"enemies",
+]]
 script = ExtResource( 1 )
 projectile = ExtResource( 2 )
 
