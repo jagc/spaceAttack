@@ -1,15 +1,18 @@
 extends KinematicBody2D
 
 export(PackedScene) var projectile
+export var health = 30
 
 const SPEED = 500
 
 var screen_size
 var half_sprite_size
 var can_shoot = true
+var dead = false
 
 onready var sprite = $Sprite
 onready var timer = $Timer
+onready var deathTimer = $deathTimer
 
 func _ready():
 	screen_size = get_viewport_rect().size.x
@@ -20,7 +23,7 @@ func _process(delta):
 		position.x -= SPEED * delta
 	elif Input.is_action_pressed("right"):
 		position.x += SPEED * delta
-	elif Input.is_action_just_pressed("close"):
+	if Input.is_action_just_pressed("close"):
 		get_tree().quit()
 		
 	if can_shoot and Input.is_action_pressed("shoot"):
@@ -34,3 +37,17 @@ func _process(delta):
 
 func _on_Timer_timeout():
 	can_shoot = true
+
+func add_damage(damage):
+	if dead:
+		return
+	health -= damage
+	if health <= 0:
+		dead = true
+		health = 0
+		deathTimer.start()
+		set_process(false)
+		sprite.queue_free()
+		
+func _on_deathTimer_timeout():
+	get_tree().reload_current_scene()
